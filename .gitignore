@@ -1,0 +1,8 @@
+.env
+venv/
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+# la base de checkpoints es local (se regenera); las trazas SÍ se suben
+checkpoints.sqlite*

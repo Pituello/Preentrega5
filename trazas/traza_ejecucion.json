@@ -1,0 +1,302 @@
+{
+  "actualizado_en": "2026-10-07T19:35:32+00:00",
+  "recursion_limit": 10,
+  "checkpoint_db": "checkpoints.sqlite",
+  "escenarios_completados": "5 de 5",
+  "checkpoints_por_thread": {
+    "demo-stock-tera": 15,
+    "demo-saveiro-cordoba": 9,
+    "demo-modelo-inexistente": 5
+  },
+  "escenarios": [
+    {
+      "numero": 1,
+      "escenario": "Razonamiento multi-paso",
+      "criterio": "Autonomía: el agente encadena herramientas solo (buscar_versiones -> consultar_stock)",
+      "llm": "openai / gpt-4o-mini",
+      "ejecutado_en": "2026-10-07T19:35:21+00:00",
+      "thread_id": "demo-stock-tera",
+      "pregunta": "¿Hay stock del Tera con caja automática en la sucursal Palermo?",
+      "pasos": [
+        {
+          "tipo": "decision",
+          "herramienta": "buscar_versiones",
+          "argumentos": {
+            "modelo": "Tera"
+          },
+          "contenido": "",
+          "es_error": false
+        },
+        {
+          "tipo": "observacion",
+          "herramienta": "buscar_versiones",
+          "argumentos": null,
+          "contenido": "[{\"version_id\": \"TERA-TREND-MT5\", \"modelo\": \"Tera\", \"version\": \"Trend MSI MT5\", \"motor\": \"1.6 MSI atmosférico, 4 cilindros\", \"potencia_cv\": 110, \"torque_nm\": 155, \"transmision\": \"manual de 5 velocidades\", \"automatica\": false}, {\"version_id\": \"TERA-COMFORT-AT6\", \"modelo\": \"Tera\", \"version\": \"Comfort 170 TSI AT6\", \"motor\": \"1.0 TSI turbo, 3 cilindros\", \"potencia_cv\": 101, \"torque_nm\": 170, \"transmision\": \"automática Tiptronic de 6 velocidades\", \"automatica\": true}, {\"version_id\": \"TERA-HIGH-AT6\", \"modelo\": \"Tera\", \"version\": \"High 170 TSI AT6\", \"motor\": \"1.0 TSI turbo, 3 cilindros\", \"potencia_cv\": 101, \"torque_nm\": 170, \"transmision\": \"automática Tiptronic de 6 velocidades\", \"automatica\": true}, {\"version_id\": \"TERA-OUTFIT-AT6\", \"modelo\": \"Tera\", \"version\": \"Outfit 170 TSI AT6\", \"motor\": \"1.0 TSI turbo, 3 cilindros\", \"potencia_cv\": 101, \"torque_nm\": 170, \"transmision\": \"automática Tiptronic de 6 velocidades\", \"automatica\": true}]",
+          "es_error": false
+        },
+        {
+          "tipo": "decision",
+          "herramienta": "consultar_stock",
+          "argumentos": {
+            "version_id": "TERA-COMFORT-AT6",
+            "sucursal": "Palermo"
+          },
+          "contenido": "",
+          "es_error": false
+        },
+        {
+          "tipo": "decision",
+          "herramienta": "consultar_stock",
+          "argumentos": {
+            "version_id": "TERA-HIGH-AT6",
+            "sucursal": "Palermo"
+          },
+          "contenido": "",
+          "es_error": false
+        },
+        {
+          "tipo": "decision",
+          "herramienta": "consultar_stock",
+          "argumentos": {
+            "version_id": "TERA-OUTFIT-AT6",
+            "sucursal": "Palermo"
+          },
+          "contenido": "",
+          "es_error": false
+        },
+        {
+          "tipo": "observacion",
+          "herramienta": "consultar_stock",
+          "argumentos": null,
+          "contenido": "{\"version_id\": \"TERA-COMFORT-AT6\", \"sucursal\": \"Palermo\", \"unidades\": 0}",
+          "es_error": false
+        },
+        {
+          "tipo": "observacion",
+          "herramienta": "consultar_stock",
+          "argumentos": null,
+          "contenido": "{\"version_id\": \"TERA-HIGH-AT6\", \"sucursal\": \"Palermo\", \"unidades\": 2}",
+          "es_error": false
+        },
+        {
+          "tipo": "observacion",
+          "herramienta": "consultar_stock",
+          "argumentos": null,
+          "contenido": "{\"version_id\": \"TERA-OUTFIT-AT6\", \"sucursal\": \"Palermo\", \"unidades\": 1}",
+          "es_error": false
+        },
+        {
+          "tipo": "respuesta",
+          "herramienta": null,
+          "argumentos": null,
+          "contenido": "En la sucursal Palermo hay stock del Tera con caja automática en las siguientes versiones:\n\n- **Tera High 170 TSI AT6**: 2 unidades disponibles.\n- **Tera Outfit 170 TSI AT6**: 1 unidad disponible.\n\nLa versión **Tera Comfort 170 TSI AT6** no tiene stock. Si necesitas más información o deseas consultar otra versión, házmelo saber.",
+          "es_error": false
+        }
+      ],
+      "respuesta": "En la sucursal Palermo hay stock del Tera con caja automática en las siguientes versiones:\n\n- **Tera High 170 TSI AT6**: 2 unidades disponibles.\n- **Tera Outfit 170 TSI AT6**: 1 unidad disponible.\n\nLa versión **Tera Comfort 170 TSI AT6** no tiene stock. Si necesitas más información o deseas consultar otra versión, házmelo saber.",
+      "llamadas_a_herramientas": 4,
+      "limite_alcanzado": false
+    },
+    {
+      "numero": 2,
+      "escenario": "Memoria en la misma sesión",
+      "criterio": "Resiliencia de estado: '¿y en Belgrano?' solo tiene sentido recordando el turno anterior",
+      "llm": "openai / gpt-4o-mini",
+      "ejecutado_en": "2026-10-07T19:35:25+00:00",
+      "thread_id": "demo-stock-tera",
+      "pregunta": "¿Y en Belgrano?",
+      "pasos": [
+        {
+          "tipo": "decision",
+          "herramienta": "consultar_stock",
+          "argumentos": {
+            "version_id": "TERA-COMFORT-AT6",
+            "sucursal": "Belgrano"
+          },
+          "contenido": "",
+          "es_error": false
+        },
+        {
+          "tipo": "decision",
+          "herramienta": "consultar_stock",
+          "argumentos": {
+            "version_id": "TERA-HIGH-AT6",
+            "sucursal": "Belgrano"
+          },
+          "contenido": "",
+          "es_error": false
+        },
+        {
+          "tipo": "decision",
+          "herramienta": "consultar_stock",
+          "argumentos": {
+            "version_id": "TERA-OUTFIT-AT6",
+            "sucursal": "Belgrano"
+          },
+          "contenido": "",
+          "es_error": false
+        },
+        {
+          "tipo": "observacion",
+          "herramienta": "consultar_stock",
+          "argumentos": null,
+          "contenido": "{\"version_id\": \"TERA-COMFORT-AT6\", \"sucursal\": \"Belgrano\", \"unidades\": 3}",
+          "es_error": false
+        },
+        {
+          "tipo": "observacion",
+          "herramienta": "consultar_stock",
+          "argumentos": null,
+          "contenido": "{\"version_id\": \"TERA-HIGH-AT6\", \"sucursal\": \"Belgrano\", \"unidades\": 0}",
+          "es_error": false
+        },
+        {
+          "tipo": "observacion",
+          "herramienta": "consultar_stock",
+          "argumentos": null,
+          "contenido": "{\"version_id\": \"TERA-OUTFIT-AT6\", \"sucursal\": \"Belgrano\", \"unidades\": 1}",
+          "es_error": false
+        },
+        {
+          "tipo": "respuesta",
+          "herramienta": null,
+          "argumentos": null,
+          "contenido": "En la sucursal Belgrano hay stock del Tera con caja automática en las siguientes versiones:\n\n- **Tera Comfort 170 TSI AT6**: 3 unidades disponibles.\n- **Tera Outfit 170 TSI AT6**: 1 unidad disponible.\n\nLa versión **Tera High 170 TSI AT6** no tiene stock. Si necesitas más información o deseas consultar otra sucursal, no dudes en decírmelo.",
+          "es_error": false
+        }
+      ],
+      "respuesta": "En la sucursal Belgrano hay stock del Tera con caja automática en las siguientes versiones:\n\n- **Tera Comfort 170 TSI AT6**: 3 unidades disponibles.\n- **Tera Outfit 170 TSI AT6**: 1 unidad disponible.\n\nLa versión **Tera High 170 TSI AT6** no tiene stock. Si necesitas más información o deseas consultar otra sucursal, no dudes en decírmelo.",
+      "llamadas_a_herramientas": 3,
+      "limite_alcanzado": false
+    },
+    {
+      "numero": 3,
+      "escenario": "Ciclo de retorno ante un timeout",
+      "criterio": "El sistema de Córdoba falla la primera vez: el agente reintenta",
+      "llm": "openai / gpt-4o-mini",
+      "ejecutado_en": "2026-10-07T19:35:28+00:00",
+      "thread_id": "demo-saveiro-cordoba",
+      "pregunta": "¿Tienen la Saveiro Extreme en la sucursal Córdoba?",
+      "pasos": [
+        {
+          "tipo": "decision",
+          "herramienta": "buscar_versiones",
+          "argumentos": {
+            "modelo": "Saveiro"
+          },
+          "contenido": "",
+          "es_error": false
+        },
+        {
+          "tipo": "observacion",
+          "herramienta": "buscar_versiones",
+          "argumentos": null,
+          "contenido": "[{\"version_id\": \"SAVEIRO-TRENDLINE-CS\", \"modelo\": \"Saveiro\", \"version\": \"Trendline cabina simple\", \"motor\": \"1.6 MSI, 4 cilindros\", \"potencia_cv\": 110, \"torque_nm\": 155, \"transmision\": \"manual de 5 velocidades\", \"automatica\": false}, {\"version_id\": \"SAVEIRO-COMFORTLINE-CD\", \"modelo\": \"Saveiro\", \"version\": \"Comfortline cabina doble\", \"motor\": \"1.6 MSI, 4 cilindros\", \"potencia_cv\": 110, \"torque_nm\": 155, \"transmision\": \"manual de 5 velocidades\", \"automatica\": false}, {\"version_id\": \"SAVEIRO-EXTREME-CD\", \"modelo\": \"Saveiro\", \"version\": \"Extreme cabina doble\", \"motor\": \"1.6 MSI, 4 cilindros\", \"potencia_cv\": 110, \"torque_nm\": 155, \"transmision\": \"manual de 5 velocidades\", \"automatica\": false}]",
+          "es_error": false
+        },
+        {
+          "tipo": "decision",
+          "herramienta": "consultar_stock",
+          "argumentos": {
+            "version_id": "SAVEIRO-EXTREME-CD",
+            "sucursal": "Córdoba"
+          },
+          "contenido": "",
+          "es_error": false
+        },
+        {
+          "tipo": "observacion",
+          "herramienta": "consultar_stock",
+          "argumentos": null,
+          "contenido": "Error: TimeoutError('El sistema de stock de la sucursal Córdoba no respondió a tiempo (timeout simulado).')\n Please fix your mistakes.",
+          "es_error": true
+        },
+        {
+          "tipo": "decision",
+          "herramienta": "consultar_stock",
+          "argumentos": {
+            "version_id": "SAVEIRO-EXTREME-CD",
+            "sucursal": "Córdoba"
+          },
+          "contenido": "",
+          "es_error": false
+        },
+        {
+          "tipo": "observacion",
+          "herramienta": "consultar_stock",
+          "argumentos": null,
+          "contenido": "{\"version_id\": \"SAVEIRO-EXTREME-CD\", \"sucursal\": \"Córdoba\", \"unidades\": 2}",
+          "es_error": false
+        },
+        {
+          "tipo": "respuesta",
+          "herramienta": null,
+          "argumentos": null,
+          "contenido": "Sí, en la sucursal Córdoba tenemos 2 unidades de la Saveiro Extreme cabina doble disponibles. Si necesitas más información o deseas realizar una consulta, no dudes en decírmelo.",
+          "es_error": false
+        }
+      ],
+      "respuesta": "Sí, en la sucursal Córdoba tenemos 2 unidades de la Saveiro Extreme cabina doble disponibles. Si necesitas más información o deseas realizar una consulta, no dudes en decírmelo.",
+      "llamadas_a_herramientas": 3,
+      "limite_alcanzado": false
+    },
+    {
+      "numero": 4,
+      "escenario": "Ciclo de retorno ante un dato inexistente",
+      "criterio": "La Amarok no está en el catálogo: el agente explica y pide aclaración, sin inventar",
+      "llm": "openai / gpt-4o-mini",
+      "ejecutado_en": "2026-10-07T19:35:30+00:00",
+      "thread_id": "demo-modelo-inexistente",
+      "pregunta": "¿Cuántas Amarok tienen en stock?",
+      "pasos": [
+        {
+          "tipo": "decision",
+          "herramienta": "buscar_versiones",
+          "argumentos": {
+            "modelo": "Amarok"
+          },
+          "contenido": "",
+          "es_error": false
+        },
+        {
+          "tipo": "observacion",
+          "herramienta": "buscar_versiones",
+          "argumentos": null,
+          "contenido": "ERROR: el modelo 'Amarok' no está en el catálogo de la concesionaria. Modelos disponibles: Nivus, Polo, Saveiro, Taos, Tera, Vento, Virtus.",
+          "es_error": true
+        },
+        {
+          "tipo": "respuesta",
+          "herramienta": null,
+          "argumentos": null,
+          "contenido": "La Amarok no está en el catálogo de la concesionaria. Los modelos disponibles son: Nivus, Polo, Saveiro, Taos, Tera, Vento y Virtus. Si necesitas información sobre alguno de estos modelos, házmelo saber.",
+          "es_error": false
+        }
+      ],
+      "respuesta": "La Amarok no está en el catálogo de la concesionaria. Los modelos disponibles son: Nivus, Polo, Saveiro, Taos, Tera, Vento y Virtus. Si necesitas información sobre alguno de estos modelos, házmelo saber.",
+      "llamadas_a_herramientas": 1,
+      "limite_alcanzado": false
+    },
+    {
+      "numero": 5,
+      "escenario": "Memoria después de reiniciar",
+      "criterio": "Persistencia en SQLite: nueva conexión, mismo thread_id, el agente retoma la conversación",
+      "llm": "openai / gpt-4o-mini",
+      "ejecutado_en": "2026-10-07T19:35:32+00:00",
+      "thread_id": "demo-stock-tera",
+      "pregunta": "De las versiones automáticas que me dijiste, ¿qué motor tienen?",
+      "pasos": [
+        {
+          "tipo": "respuesta",
+          "herramienta": null,
+          "argumentos": null,
+          "contenido": "Las versiones automáticas del Tera y sus motores son las siguientes:\n\n1. **Tera Comfort 170 TSI AT6**\n   - Motor: 1.0 TSI turbo, 3 cilindros\n\n2. **Tera High 170 TSI AT6**\n   - Motor: 1.0 TSI turbo, 3 cilindros\n\n3. **Tera Outfit 170 TSI AT6**\n   - Motor: 1.0 TSI turbo, 3 cilindros\n\nTodas las versiones automáticas comparten el mismo motor. Si necesitas más información, no dudes en preguntar.",
+          "es_error": false
+        }
+      ],
+      "respuesta": "Las versiones automáticas del Tera y sus motores son las siguientes:\n\n1. **Tera Comfort 170 TSI AT6**\n   - Motor: 1.0 TSI turbo, 3 cilindros\n\n2. **Tera High 170 TSI AT6**\n   - Motor: 1.0 TSI turbo, 3 cilindros\n\n3. **Tera Outfit 170 TSI AT6**\n   - Motor: 1.0 TSI turbo, 3 cilindros\n\nTodas las versiones automáticas comparten el mismo motor. Si necesitas más información, no dudes en preguntar.",
+      "llamadas_a_herramientas": 0,
+      "limite_alcanzado": false
+    }
+  ]
+}

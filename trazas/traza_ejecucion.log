@@ -1,0 +1,77 @@
+Traza ReAct — 2026-10-07T19:35:32+00:00 — recursion_limit=10 — escenarios completados: 5 de 5
+
+### 1. Razonamiento multi-paso — Autonomía: el agente encadena herramientas solo (buscar_versiones -> consultar_stock)
+[LLM: openai / gpt-4o-mini — 2026-10-07T19:35:21+00:00]
+Usuario: "¿Hay stock del Tera con caja automática en la sucursal Palermo?"   [thread_id=demo-stock-tera]
+→ El agente decide usar la herramienta: buscar_versiones(modelo='Tera')
+→ La herramienta devuelve: [{"version_id": "TERA-TREND-MT5", "modelo": "Tera", "version": "Trend MSI MT5", "motor": "1.6 MSI atmosférico, 4 cilindros", "potencia_cv": 110, "torque_nm": 155, "transmision": "manual de 5 velocidades", "automatica": false}, {"version_id": "TERA-COMFORT-AT6", "modelo": "Tera", "version": "Comfort 170 TSI AT6", "motor": "1.0 TSI turbo, 3 cilindros", "potencia_cv": 101, "torque_nm": 170, "transmision": "automática Tiptronic de 6 velocidades", "automatica": true}, {"version_id": "TERA-HIGH-AT6", "modelo": "Tera", "version": "High 170 TSI AT6", "motor": "1.0 TSI turbo, 3 cilindros", "potencia_cv": 101, "torque_nm": 170, "transmision": "automática Tiptronic de 6 velocidades", "automatica": true}, {"version_id": "TERA-OUTFIT-AT6", "modelo": "Tera", "version": "Outfit 170 TSI AT6", "motor": "1.0 TSI turbo, 3 cilindros", "potencia_cv": 101, "torque_nm": 170, "transmision": "automática Tiptronic de 6 velocidades", "automatica": true}]
+→ El agente decide usar la herramienta: consultar_stock(version_id='TERA-COMFORT-AT6', sucursal='Palermo')
+→ El agente decide usar la herramienta: consultar_stock(version_id='TERA-HIGH-AT6', sucursal='Palermo')
+→ El agente decide usar la herramienta: consultar_stock(version_id='TERA-OUTFIT-AT6', sucursal='Palermo')
+→ La herramienta devuelve: {"version_id": "TERA-COMFORT-AT6", "sucursal": "Palermo", "unidades": 0}
+→ La herramienta devuelve: {"version_id": "TERA-HIGH-AT6", "sucursal": "Palermo", "unidades": 2}
+→ La herramienta devuelve: {"version_id": "TERA-OUTFIT-AT6", "sucursal": "Palermo", "unidades": 1}
+Respuesta: "En la sucursal Palermo hay stock del Tera con caja automática en las siguientes versiones:
+
+- **Tera High 170 TSI AT6**: 2 unidades disponibles.
+- **Tera Outfit 170 TSI AT6**: 1 unidad disponible.
+
+La versión **Tera Comfort 170 TSI AT6** no tiene stock. Si necesitas más información o deseas consultar otra versión, házmelo saber."
+(llamadas a herramientas en este turno: 4)
+
+### 2. Memoria en la misma sesión — Resiliencia de estado: '¿y en Belgrano?' solo tiene sentido recordando el turno anterior
+[LLM: openai / gpt-4o-mini — 2026-10-07T19:35:25+00:00]
+Usuario: "¿Y en Belgrano?"   [thread_id=demo-stock-tera]
+→ El agente decide usar la herramienta: consultar_stock(version_id='TERA-COMFORT-AT6', sucursal='Belgrano')
+→ El agente decide usar la herramienta: consultar_stock(version_id='TERA-HIGH-AT6', sucursal='Belgrano')
+→ El agente decide usar la herramienta: consultar_stock(version_id='TERA-OUTFIT-AT6', sucursal='Belgrano')
+→ La herramienta devuelve: {"version_id": "TERA-COMFORT-AT6", "sucursal": "Belgrano", "unidades": 3}
+→ La herramienta devuelve: {"version_id": "TERA-HIGH-AT6", "sucursal": "Belgrano", "unidades": 0}
+→ La herramienta devuelve: {"version_id": "TERA-OUTFIT-AT6", "sucursal": "Belgrano", "unidades": 1}
+Respuesta: "En la sucursal Belgrano hay stock del Tera con caja automática en las siguientes versiones:
+
+- **Tera Comfort 170 TSI AT6**: 3 unidades disponibles.
+- **Tera Outfit 170 TSI AT6**: 1 unidad disponible.
+
+La versión **Tera High 170 TSI AT6** no tiene stock. Si necesitas más información o deseas consultar otra sucursal, no dudes en decírmelo."
+(llamadas a herramientas en este turno: 3)
+
+### 3. Ciclo de retorno ante un timeout — El sistema de Córdoba falla la primera vez: el agente reintenta
+[LLM: openai / gpt-4o-mini — 2026-10-07T19:35:28+00:00]
+Usuario: "¿Tienen la Saveiro Extreme en la sucursal Córdoba?"   [thread_id=demo-saveiro-cordoba]
+→ El agente decide usar la herramienta: buscar_versiones(modelo='Saveiro')
+→ La herramienta devuelve: [{"version_id": "SAVEIRO-TRENDLINE-CS", "modelo": "Saveiro", "version": "Trendline cabina simple", "motor": "1.6 MSI, 4 cilindros", "potencia_cv": 110, "torque_nm": 155, "transmision": "manual de 5 velocidades", "automatica": false}, {"version_id": "SAVEIRO-COMFORTLINE-CD", "modelo": "Saveiro", "version": "Comfortline cabina doble", "motor": "1.6 MSI, 4 cilindros", "potencia_cv": 110, "torque_nm": 155, "transmision": "manual de 5 velocidades", "automatica": false}, {"version_id": "SAVEIRO-EXTREME-CD", "modelo": "Saveiro", "version": "Extreme cabina doble", "motor": "1.6 MSI, 4 cilindros", "potencia_cv": 110, "torque_nm": 155, "transmision": "manual de 5 velocidades", "automatica": false}]
+→ El agente decide usar la herramienta: consultar_stock(version_id='SAVEIRO-EXTREME-CD', sucursal='Córdoba')
+→ La herramienta devuelve [ERROR]: Error: TimeoutError('El sistema de stock de la sucursal Córdoba no respondió a tiempo (timeout simulado).')
+ Please fix your mistakes.
+→ El agente decide usar la herramienta: consultar_stock(version_id='SAVEIRO-EXTREME-CD', sucursal='Córdoba')
+→ La herramienta devuelve: {"version_id": "SAVEIRO-EXTREME-CD", "sucursal": "Córdoba", "unidades": 2}
+Respuesta: "Sí, en la sucursal Córdoba tenemos 2 unidades de la Saveiro Extreme cabina doble disponibles. Si necesitas más información o deseas realizar una consulta, no dudes en decírmelo."
+(llamadas a herramientas en este turno: 3)
+
+### 4. Ciclo de retorno ante un dato inexistente — La Amarok no está en el catálogo: el agente explica y pide aclaración, sin inventar
+[LLM: openai / gpt-4o-mini — 2026-10-07T19:35:30+00:00]
+Usuario: "¿Cuántas Amarok tienen en stock?"   [thread_id=demo-modelo-inexistente]
+→ El agente decide usar la herramienta: buscar_versiones(modelo='Amarok')
+→ La herramienta devuelve [ERROR]: ERROR: el modelo 'Amarok' no está en el catálogo de la concesionaria. Modelos disponibles: Nivus, Polo, Saveiro, Taos, Tera, Vento, Virtus.
+Respuesta: "La Amarok no está en el catálogo de la concesionaria. Los modelos disponibles son: Nivus, Polo, Saveiro, Taos, Tera, Vento y Virtus. Si necesitas información sobre alguno de estos modelos, házmelo saber."
+(llamadas a herramientas en este turno: 1)
+
+### 5. Memoria después de reiniciar — Persistencia en SQLite: nueva conexión, mismo thread_id, el agente retoma la conversación
+[LLM: openai / gpt-4o-mini — 2026-10-07T19:35:32+00:00]
+Usuario: "De las versiones automáticas que me dijiste, ¿qué motor tienen?"   [thread_id=demo-stock-tera]
+Respuesta: "Las versiones automáticas del Tera y sus motores son las siguientes:
+
+1. **Tera Comfort 170 TSI AT6**
+   - Motor: 1.0 TSI turbo, 3 cilindros
+
+2. **Tera High 170 TSI AT6**
+   - Motor: 1.0 TSI turbo, 3 cilindros
+
+3. **Tera Outfit 170 TSI AT6**
+   - Motor: 1.0 TSI turbo, 3 cilindros
+
+Todas las versiones automáticas comparten el mismo motor. Si necesitas más información, no dudes en preguntar."
+(llamadas a herramientas en este turno: 0)
+
+Checkpoints guardados por thread: {'demo-stock-tera': 15, 'demo-saveiro-cordoba': 9, 'demo-modelo-inexistente': 5}

@@ -1,0 +1,17 @@
+# Python 3.12
+langgraph>=1.0,<2
+langgraph-checkpoint-sqlite>=3,<4
+aiosqlite
+langchain-core>=1.0
+pydantic
+python-dotenv
+loguru
+
+# Proveedores de LLM (alcanza con configurar uno en el .env)
+langchain-openai
+langchain-anthropic
+langchain-google-genai
+langchain-ollama
+
+# Tests
+pytest
